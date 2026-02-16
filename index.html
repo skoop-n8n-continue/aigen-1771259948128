@@ -25,24 +25,28 @@
     .weather-card {
       /* Responsive Sizing */
       width: min(90vw, 800px);
-      aspect-ratio: 2 / 1;
+      aspect-ratio: 2 / 1; /* Maintain approx 2:1 */
       
       /* Layout */
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
+      grid-template-rows: 1fr auto; /* Main content takes available space, forecast takes bottom */
       
       /* Visuals */
       background-color: #00b7af; /* Teal/Turquoise */
       color: white;
       border-radius: 24px;
-      padding: clamp(1.5rem, 5vw, 3.5rem);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+      padding: clamp(1.5rem, 4vw, 2.5rem); /* Reduced padding slightly to fit forecast */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       overflow: hidden;
       position: relative;
+      gap: 1rem;
     }
 
     /* Left Column (Info) */
     .info-section {
+      grid-column: 1;
+      grid-row: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -62,15 +66,15 @@
     .main-content {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.2rem;
     }
 
     .temperature {
-      font-size: clamp(4.5rem, 13vw, 9rem);
+      font-size: clamp(4rem, 11vw, 7.5rem); /* Slightly reduced to fit vertical space */
       font-weight: 700;
       line-height: 0.9;
       letter-spacing: -0.04em;
-      margin-left: -4px; /* Optical alignment */
+      margin-left: -4px;
     }
 
     .date-group {
@@ -81,27 +85,29 @@
     }
 
     .date {
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-size: clamp(0.9rem, 2.2vw, 1.2rem);
       font-weight: 500;
       opacity: 0.95;
     }
 
     .location {
-      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
       font-weight: 400;
       opacity: 0.85;
     }
 
-    /* Bottom Left: Range */
+    /* Bottom Left of Info Section: Range */
     .range {
       font-size: clamp(1rem, 2.5vw, 1.4rem);
       font-weight: 500;
       opacity: 0.9;
-      margin-top: auto; /* Ensure it sticks to bottom if space permits */
+      margin-top: auto; 
     }
 
-    /* Right Column (Icon) */
+    /* Right Column (Main Icon) */
     .icon-section {
+      grid-column: 2;
+      grid-row: 1;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -109,12 +115,53 @@
     }
 
     .weather-icon {
-      width: clamp(120px, 35vw, 280px);
-      height: clamp(120px, 35vw, 280px);
-      filter: drop-shadow(0 0 10px rgba(255, 235, 59, 0.3)); /* Subtle glow */
+      width: clamp(100px, 30vw, 240px); /* Slightly reduced */
+      height: clamp(100px, 30vw, 240px);
+      filter: drop-shadow(0 0 10px rgba(255, 235, 59, 0.3));
       animation: float 6s ease-in-out infinite;
     }
 
+    /* Bottom Row (Forecast) */
+    .forecast-section {
+      grid-column: 1 / -1; /* Span full width */
+      grid-row: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      margin-top: 0.5rem;
+    }
+
+    .forecast-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      flex: 1;
+      text-align: center;
+    }
+
+    .forecast-day {
+      font-size: clamp(0.8rem, 1.5vw, 1rem);
+      font-weight: 500;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .forecast-icon {
+      width: clamp(24px, 4vw, 32px);
+      height: clamp(24px, 4vw, 32px);
+      fill: white; /* Clean, minimalist white icons */
+    }
+
+    .forecast-temp {
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      font-weight: 600;
+    }
+
+    /* Animations */
     @keyframes float {
       0% { transform: translateY(0px); }
       50% { transform: translateY(-10px); }
@@ -131,34 +178,42 @@
       transform-origin: center;
     }
 
-    /* Mobile / Vertical Fallback if screen is too narrow or aspect ratio breaks */
+    /* Mobile / Vertical Fallback */
     @media (max-width: 600px) {
       .weather-card {
         aspect-ratio: auto;
-        min-height: 60vh;
+        min-height: auto;
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto auto auto; /* Icon, Info, Forecast */
         padding: 2rem;
-        text-align: center;
-      }
-      
-      .info-section {
-        align-items: center;
         text-align: center;
         gap: 2rem;
       }
       
-      .main-content {
+      .info-section {
+        grid-column: 1;
+        grid-row: 2;
         align-items: center;
-      }
-      
-      .range {
-        margin-top: 1rem;
+        text-align: center;
+        gap: 1.5rem;
       }
       
       .icon-section {
-        order: -1; /* Move icon to top on mobile for better flow */
-        margin-bottom: 1rem;
+        grid-column: 1;
+        grid-row: 1;
+        margin-bottom: 0;
+      }
+
+      .forecast-section {
+        grid-column: 1;
+        grid-row: 3;
+        margin-top: 1rem;
+        width: 100%;
+        gap: 1rem;
+      }
+      
+      .range {
+        margin-top: 0.5rem;
       }
     }
   </style>
@@ -167,7 +222,7 @@
 
   <div class="weather-card">
     
-    <!-- Left Section -->
+    <!-- Left Section: Info -->
     <div class="info-section">
       <!-- Top -->
       <div class="condition">Sunny</div>
@@ -181,13 +236,22 @@
         </div>
       </div>
       
-      <!-- Bottom -->
+      <!-- Bottom Info -->
       <div class="range">H: 22° L: 22°</div>
     </div>
 
-    <!-- Right Section -->
+    <!-- Right Section: Icon -->
     <div class="icon-section">
       <svg class="weather-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
         <!-- Sun Rays -->
         <g class="sun-rays" stroke="#FFD700" stroke-width="4" stroke-linecap="round">
           <line x1="50" y1="10" x2="50" y2="2" />
@@ -202,6 +266,70 @@
         <!-- Sun Body -->
         <circle cx="50" cy="50" r="22" fill="#FFEB3B" stroke="#FFD700" stroke-width="2" />
       </svg>
+    </div>
+
+    <!-- Bottom Section: 4-Day Forecast -->
+    <div class="forecast-section">
+      <!-- Day 1 -->
+      <div class="forecast-item">
+        <div class="forecast-day">Tue</div>
+        <svg class="forecast-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="5" fill="white" />
+          <g stroke="white" stroke-width="2" stroke-linecap="round">
+            <line x1="12" y1="2" x2="12" y2="4" />
+            <line x1="12" y1="20" x2="12" y2="22" />
+            <line x1="2" y1="12" x2="4" y2="12" />
+            <line x1="20" y1="12" x2="22" y2="12" />
+            <line x1="4.9" y1="4.9" x2="6.3" y2="6.3" />
+            <line x1="17.7" y1="17.7" x2="19.1" y2="19.1" />
+            <line x1="4.9" y1="19.1" x2="6.3" y2="17.7" />
+            <line x1="17.7" y1="6.3" x2="19.1" y2="4.9" />
+          </g>
+        </svg>
+        <div class="forecast-temp">24°</div>
+      </div>
+
+      <!-- Day 2 -->
+      <div class="forecast-item">
+        <div class="forecast-day">Wed</div>
+        <svg class="forecast-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.5,19c2.5,0,4.5-2,4.5-4.5c0-2.3-1.7-4.2-3.9-4.5c-0.2-2.5-2.3-4.5-4.9-4.5c-2.4,0-4.3,1.7-4.8,4c-0.1,0-0.2,0-0.3,0C4.5,9.5,1.5,12.5,1.5,16.2C1.5,19,4.5,19,4.5,19H17.5z" fill="white"/>
+        </svg>
+        <div class="forecast-temp">20°</div>
+      </div>
+
+      <!-- Day 3 -->
+      <div class="forecast-item">
+        <div class="forecast-day">Thu</div>
+        <svg class="forecast-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.5,16c2.5,0,4.5-2,4.5-4.5c0-2.3-1.7-4.2-3.9-4.5c-0.2-2.5-2.3-4.5-4.9-4.5c-2.4,0-4.3,1.7-4.8,4c-0.1,0-0.2,0-0.3,0C4.5,6.5,1.5,9.5,1.5,13.2C1.5,16,4.5,16,4.5,16H17.5z" fill="white"/>
+          <g stroke="white" stroke-width="2" stroke-linecap="round">
+            <line x1="8" y1="19" x2="6" y2="22" />
+            <line x1="12" y1="19" x2="10" y2="22" />
+            <line x1="16" y1="19" x2="14" y2="22" />
+          </g>
+        </svg>
+        <div class="forecast-temp">18°</div>
+      </div>
+
+      <!-- Day 4 -->
+      <div class="forecast-item">
+        <div class="forecast-day">Fri</div>
+        <svg class="forecast-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="5" fill="white" />
+          <g stroke="white" stroke-width="2" stroke-linecap="round">
+            <line x1="12" y1="2" x2="12" y2="4" />
+            <line x1="12" y1="20" x2="12" y2="22" />
+            <line x1="2" y1="12" x2="4" y2="12" />
+            <line x1="20" y1="12" x2="22" y2="12" />
+            <line x1="4.9" y1="4.9" x2="6.3" y2="6.3" />
+            <line x1="17.7" y1="17.7" x2="19.1" y2="19.1" />
+            <line x1="4.9" y1="19.1" x2="6.3" y2="17.7" />
+            <line x1="17.7" y1="6.3" x2="19.1" y2="4.9" />
+          </g>
+        </svg>
+        <div class="forecast-temp">25°</div>
+      </div>
     </div>
 
   </div>
