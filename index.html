@@ -17,28 +17,29 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #10181f; /* Dark background to make card pop */
+      background-color: #10181f;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 2rem 1rem;
     }
 
     /* Main Card */
     .weather-card {
-      /* Responsive Sizing */
+      /* Responsive Sizing - adjusted for content */
       width: min(90vw, 800px);
-      aspect-ratio: 2 / 1; /* Maintain approx 2:1 */
+      min-height: min(80vh, 500px);
       
       /* Layout */
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
-      grid-template-rows: 1fr auto; /* Main content takes available space, forecast takes bottom */
+      grid-template-rows: 1fr auto;
       
       /* Visuals */
-      background-color: #00b7af; /* Teal/Turquoise */
+      background-color: #00b7af;
       color: white;
       border-radius: 24px;
-      padding: clamp(1.5rem, 4vw, 2.5rem); /* Reduced padding slightly to fit forecast */
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      overflow: hidden;
+      padding: clamp(1.5rem, 3.5vw, 2.5rem);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      overflow: visible;
       position: relative;
       gap: 1rem;
     }
@@ -50,13 +51,13 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100%;
       z-index: 2;
+      padding-bottom: 1rem;
     }
 
     /* Top Left: Condition */
     .condition {
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-size: clamp(1.2rem, 2.8vw, 1.8rem);
       font-weight: 600;
       letter-spacing: 0.02em;
       text-transform: capitalize;
@@ -66,13 +67,13 @@
     .main-content {
       display: flex;
       flex-direction: column;
-      gap: 0.2rem;
+      gap: 0.3rem;
     }
 
     .temperature {
-      font-size: clamp(4rem, 11vw, 7.5rem); /* Slightly reduced to fit vertical space */
+      font-size: clamp(3.5rem, 10vw, 6.5rem);
       font-weight: 700;
-      line-height: 0.9;
+      line-height: 0.95;
       letter-spacing: -0.04em;
       margin-left: -4px;
     }
@@ -80,7 +81,7 @@
     .date-group {
       display: flex;
       flex-direction: column;
-      gap: 0.2rem;
+      gap: 0.25rem;
       margin-top: 0.5rem;
     }
 
@@ -98,10 +99,10 @@
 
     /* Bottom Left of Info Section: Range */
     .range {
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-size: clamp(1rem, 2.4vw, 1.3rem);
       font-weight: 500;
       opacity: 0.9;
-      margin-top: auto; 
+      margin-top: auto;
     }
 
     /* Right Column (Main Icon) */
@@ -115,35 +116,36 @@
     }
 
     .weather-icon {
-      width: clamp(100px, 30vw, 240px); /* Slightly reduced */
-      height: clamp(100px, 30vw, 240px);
+      width: clamp(90px, 28vw, 220px);
+      height: clamp(90px, 28vw, 220px);
       filter: drop-shadow(0 0 10px rgba(255, 235, 59, 0.3));
       animation: float 6s ease-in-out infinite;
     }
 
     /* Bottom Row (Forecast) */
     .forecast-section {
-      grid-column: 1 / -1; /* Span full width */
+      grid-column: 1 / -1;
       grid-row: 2;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1.2rem 0 0.5rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
       margin-top: 0.5rem;
+      gap: 0.5rem;
     }
 
     .forecast-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.5rem;
       flex: 1;
       text-align: center;
     }
 
     .forecast-day {
-      font-size: clamp(0.8rem, 1.5vw, 1rem);
+      font-size: clamp(0.75rem, 1.6vw, 1rem);
       font-weight: 500;
       opacity: 0.9;
       text-transform: uppercase;
@@ -151,9 +153,9 @@
     }
 
     .forecast-icon {
-      width: clamp(24px, 4vw, 32px);
-      height: clamp(24px, 4vw, 32px);
-      fill: white; /* Clean, minimalist white icons */
+      width: clamp(28px, 4.5vw, 36px);
+      height: clamp(28px, 4.5vw, 36px);
+      fill: white;
     }
 
     .forecast-temp {
@@ -179,15 +181,18 @@
     }
 
     /* Mobile / Vertical Fallback */
-    @media (max-width: 600px) {
+    @media (max-width: 650px) {
+      body {
+        padding: 1rem;
+      }
+
       .weather-card {
-        aspect-ratio: auto;
-        min-height: auto;
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto; /* Icon, Info, Forecast */
-        padding: 2rem;
+        grid-template-rows: auto auto auto;
+        padding: 2rem 1.5rem;
         text-align: center;
-        gap: 2rem;
+        gap: 1.5rem;
+        min-height: auto;
       }
       
       .info-section {
@@ -196,6 +201,7 @@
         align-items: center;
         text-align: center;
         gap: 1.5rem;
+        padding-bottom: 0;
       }
       
       .icon-section {
@@ -208,12 +214,23 @@
         grid-column: 1;
         grid-row: 3;
         margin-top: 1rem;
+        padding-top: 1.5rem;
         width: 100%;
-        gap: 1rem;
+        gap: 0.8rem;
       }
       
       .range {
         margin-top: 0.5rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .forecast-section {
+        gap: 0.5rem;
+      }
+      
+      .forecast-item {
+        gap: 0.4rem;
       }
     }
   </style>
