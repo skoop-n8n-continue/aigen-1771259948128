@@ -1,16 +1,15 @@
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-  &lt;meta charset="UTF-8"&gt;
-  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-  &lt;meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"&gt;
-  &lt;meta http-equiv="Pragma" content="no-cache"&gt;
-  &lt;meta http-equiv="Expires" content="0"&gt;
-  &lt;title&gt;Weather App&lt;/title&gt;
-  &lt;style&gt;
-    * {
-      box-sizing: border-box;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Weather App</title>
+  <style>
+    /* Reset & Base */
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 0;
@@ -18,118 +17,194 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #10181f;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #10181f; /* Dark background to make card pop */
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
+
+    /* Main Card */
     .weather-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background-color: #00b7af;
-      color: white;
-      aspect-ratio: 2 / 1;
+      /* Responsive Sizing */
       width: min(90vw, 800px);
-      max-height: 400px;
-      margin: 2rem auto;
-      padding: clamp(1.5rem, 5vw, 3rem);
-      border-radius: 16px;
+      aspect-ratio: 2 / 1;
+      
+      /* Layout */
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      
+      /* Visuals */
+      background-color: #00b7af; /* Teal/Turquoise */
+      color: white;
+      border-radius: 24px;
+      padding: clamp(1.5rem, 5vw, 3.5rem);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+      overflow: hidden;
+      position: relative;
     }
-    .info {
-      flex: 1;
+
+    /* Left Column (Info) */
+    .info-section {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding-right: clamp(1rem, 4vw, 2.5rem);
       height: 100%;
+      z-index: 2;
     }
+
+    /* Top Left: Condition */
     .condition {
-      font-size: clamp(1.1rem, 3.5vw, 1.8rem);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
       font-weight: 600;
-      margin: 0 0 1.5rem 0;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.02em;
+      text-transform: capitalize;
     }
-    .temp-container {
+
+    /* Middle: Temperature + Date */
+    .main-content {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      flex: 1;
+      gap: 0.5rem;
     }
-    .main-temp {
-      font-size: clamp(4rem, 12vw, 8rem);
-      font-weight: 800;
+
+    .temperature {
+      font-size: clamp(4.5rem, 13vw, 9rem);
+      font-weight: 700;
       line-height: 0.9;
-      letter-spacing: -0.02em;
-      margin: 0 0 0.75rem 0;
+      letter-spacing: -0.04em;
+      margin-left: -4px; /* Optical alignment */
     }
-    .sub-details {
+
+    .date-group {
       display: flex;
       flex-direction: column;
+      gap: 0.2rem;
+      margin-top: 0.5rem;
     }
+
     .date {
-      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
       font-weight: 500;
-      margin: 0 0 0.3rem 0;
+      opacity: 0.95;
     }
+
     .location {
-      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-      opacity: 0.88;
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
       font-weight: 400;
+      opacity: 0.85;
     }
-    .temp-range {
-      font-size: clamp(0.95rem, 2.8vw, 1.25rem);
+
+    /* Bottom Left: Range */
+    .range {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
       font-weight: 500;
-      opacity: 0.92;
-      align-self: flex-start;
-      margin-top: auto;
+      opacity: 0.9;
+      margin-top: auto; /* Ensure it sticks to bottom if space permits */
     }
-    .weather-icon {
+
+    /* Right Column (Icon) */
+    .icon-section {
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      width: clamp(110px, 28vw, 200px);
-      height: clamp(110px, 28vw, 200px);
+      position: relative;
     }
-    .weather-icon svg {
-      width: 100%;
-      height: 100%;
+
+    .weather-icon {
+      width: clamp(120px, 35vw, 280px);
+      height: clamp(120px, 35vw, 280px);
+      filter: drop-shadow(0 0 10px rgba(255, 235, 59, 0.3)); /* Subtle glow */
+      animation: float 6s ease-in-out infinite;
     }
-    @media (max-width: 480px) {
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes rotate-rays {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .sun-rays {
+      animation: rotate-rays 20s linear infinite;
+      transform-origin: center;
+    }
+
+    /* Mobile / Vertical Fallback if screen is too narrow or aspect ratio breaks */
+    @media (max-width: 600px) {
       .weather-card {
-        margin: 1rem;
-        padding: clamp(1rem, 4vw, 2rem);
+        aspect-ratio: auto;
+        min-height: 60vh;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        padding: 2rem;
+        text-align: center;
+      }
+      
+      .info-section {
+        align-items: center;
+        text-align: center;
+        gap: 2rem;
+      }
+      
+      .main-content {
+        align-items: center;
+      }
+      
+      .range {
+        margin-top: 1rem;
+      }
+      
+      .icon-section {
+        order: -1; /* Move icon to top on mobile for better flow */
+        margin-bottom: 1rem;
       }
     }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;div class="weather-card"&gt;
-    &lt;div class="info"&gt;
-      &lt;div class="condition"&gt;Sunny&lt;/div&gt;
-      &lt;div class="temp-container"&gt;
-        &lt;div class="main-temp"&gt;22°F&lt;/div&gt;
-        &lt;div class="sub-details"&gt;
-          &lt;div class="date"&gt;Monday, February 16&lt;/div&gt;
-          &lt;div class="location"&gt;Location&lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class="temp-range"&gt;H: 22° L: 22°&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="weather-icon"&gt;
-      &lt;svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"&gt;
-        &lt;g stroke="#FFD700" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"&gt;
-          &lt;line x1="50" y1="12" x2="50" y2="2"/&gt;
-          &lt;line x1="88" y1="50" x2="98" y2="50"/&gt;
-          &lt;line x1="50" y1="88" x2="50" y2="98"/&gt;
-          &lt;line x1="12" y1="50" x2="2" y2="50"/&gt;
-          &lt;line x1="71" y1="29" x2="81" y2="19"/&gt;
-          &lt;line x1="71" y1="71" x2="81" y2="81"/&gt;
-          &lt;line x1="29" y1="71" x2="19" y2="81"/&gt;
-          &lt;line x1="29" y1="29" x2="19" y2="19"/&gt;
-        &lt;/g&gt;
-        &lt;circle cx="50" cy="50" r="20" fill="#FFEB3B" stroke="#FFD700" stroke-width="2.8"/&gt;
-      &lt;/svg&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+  </style>
+</head>
+<body>
+
+  <div class="weather-card">
+    
+    <!-- Left Section -->
+    <div class="info-section">
+      <!-- Top -->
+      <div class="condition">Sunny</div>
+      
+      <!-- Middle -->
+      <div class="main-content">
+        <div class="temperature">22°F</div>
+        <div class="date-group">
+          <div class="date">Monday, February 16</div>
+          <div class="location">New York, NY</div>
+        </div>
+      </div>
+      
+      <!-- Bottom -->
+      <div class="range">H: 22° L: 22°</div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="icon-section">
+      <svg class="weather-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Sun Rays -->
+        <g class="sun-rays" stroke="#FFD700" stroke-width="4" stroke-linecap="round">
+          <line x1="50" y1="10" x2="50" y2="2" />
+          <line x1="50" y1="90" x2="50" y2="98" />
+          <line x1="90" y1="50" x2="98" y2="50" />
+          <line x1="10" y1="50" x2="2" y2="50" />
+          <line x1="78.28" y1="21.72" x2="84" y2="16" />
+          <line x1="21.72" y1="78.28" x2="16" y2="84" />
+          <line x1="78.28" y1="78.28" x2="84" y2="84" />
+          <line x1="21.72" y1="21.72" x2="16" y2="16" />
+        </g>
+        <!-- Sun Body -->
+        <circle cx="50" cy="50" r="22" fill="#FFEB3B" stroke="#FFD700" stroke-width="2" />
+      </svg>
+    </div>
+
+  </div>
+
+</body>
+</html>
