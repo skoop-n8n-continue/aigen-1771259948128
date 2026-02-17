@@ -20,11 +20,11 @@
       justify-content: center;
       background-color: #10181f;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      perspective: 1200px;
+      perspective: 1400px;
       overflow: hidden;
     }
 
-    /* Scene & Cube */
+    /* Scene & Cube Container */
     .scene {
       width: 60vmin;
       height: 36vmin;
@@ -36,7 +36,8 @@
       height: 100%;
       position: absolute;
       transform-style: preserve-3d;
-      animation: tumble 20s infinite linear;
+      animation: tumble 30s infinite linear;
+      transform: translateZ(-30vmin);
     }
 
     /* Pause on hover */
@@ -44,67 +45,77 @@
       animation-play-state: paused;
     }
 
-    /* Faces */
+    /* Base Face Styling */
     .face {
       position: absolute;
       background-color: #00b7af;
       color: white;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(0, 183, 175, 0.8);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       padding: 2vmin;
-      backface-visibility: hidden;
-      box-shadow: inset 0 0 40px rgba(0,0,0,0.05);
+      backface-visibility: visible;
+      box-shadow: 
+        inset 0 0 30px rgba(0,0,0,0.1),
+        0 0 20px rgba(0, 183, 175, 0.3);
     }
 
-    /* Face Dimensions & Transforms */
-    /* W=60vmin, H=36vmin, D=60vmin */
+    /* Face Dimensions & Transforms - Rectangular Prism */
+    /* Width: 60vmin, Height: 36vmin, Depth: 40vmin */
     
+    /* Front, Back, Left, Right faces */
     .face--front, .face--back, .face--left, .face--right {
       width: 60vmin;
       height: 36vmin;
     }
 
+    /* Top and Bottom faces - rectangular to match width/depth */
     .face--top, .face--bottom {
       width: 60vmin;
-      height: 60vmin;
+      height: 40vmin;
     }
 
-    /* Positions */
-    .face--front  { transform: rotateY(0deg) translateZ(30vmin); }
-    .face--right  { transform: rotateY(90deg) translateZ(30vmin); }
-    .face--back   { transform: rotateY(180deg) translateZ(30vmin); }
-    .face--left   { transform: rotateY(-90deg) translateZ(30vmin); }
+    /* Face Positioning - Depth = 40vmin, so half-depth = 20vmin */
+    .face--front  { 
+      transform: rotateY(0deg) translateZ(20vmin); 
+    }
+    .face--back   { 
+      transform: rotateY(180deg) translateZ(20vmin); 
+    }
+    .face--right  { 
+      transform: rotateY(90deg) translateZ(20vmin); 
+    }
+    .face--left   { 
+      transform: rotateY(-90deg) translateZ(20vmin); 
+    }
     
-    /* Top/Bottom need careful positioning to cap the prism */
-    /* Height is 36. Top is at Y=0 relative to top edge? No, center. */
-    /* Center of cube is at (30, 18, 30) relative to origin? */
-    /* Cube height is 36. Center is 18. */
-    /* Top face needs to move UP by 18vmin (translateY -30? No.) */
-    /* RotateX(90) puts it flat. TranslateZ moves it in its NORMAL direction (Up/Down). */
-    /* RotateX(90): Normal points UP. TranslateZ(18vmin) moves it UP. */
-    
-    .face--top    { transform: rotateX(90deg) translateZ(18vmin); }
-    .face--bottom { transform: rotateX(-90deg) translateZ(18vmin); }
+    /* Top and Bottom - Height = 36vmin, so half-height = 18vmin */
+    .face--top    { 
+      transform: rotateX(90deg) translateZ(18vmin); 
+    }
+    .face--bottom { 
+      transform: rotateX(-90deg) translateZ(18vmin); 
+    }
 
-    /* Content Styling inside Faces */
+    /* Content Layout inside Faces */
     .face-content {
       width: 100%;
       height: 100%;
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 1.3fr 0.7fr;
       grid-template-rows: 1fr;
       gap: 1vmin;
       align-items: center;
     }
     
-    /* Top/Bottom faces are square */
+    /* Top/Bottom faces - centered content */
     .face--top .face-content, .face--bottom .face-content {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
       text-align: center;
       gap: 2vmin;
     }
@@ -121,7 +132,7 @@
     .day-label {
       font-size: 3vmin;
       font-weight: 600;
-      opacity: 0.9;
+      opacity: 0.95;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 1vmin;
@@ -135,13 +146,13 @@
     }
 
     .date-small {
-      font-size: 2vmin;
-      opacity: 0.8;
+      font-size: 2.2vmin;
+      opacity: 0.85;
       margin-top: 1vmin;
     }
 
     .range-small {
-      font-size: 2vmin;
+      font-size: 2.2vmin;
       opacity: 0.9;
       margin-top: auto;
       padding-bottom: 1vmin;
@@ -152,18 +163,39 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding-right: 2vmin;
     }
 
     .weather-svg {
-      width: 15vmin;
-      height: 15vmin;
-      filter: drop-shadow(0 0 1vmin rgba(255, 235, 59, 0.3));
+      width: 16vmin;
+      height: 16vmin;
+      filter: drop-shadow(0 0 1.5vmin rgba(255, 235, 59, 0.4));
     }
 
-    /* Animation Keyframes */
+    /* Larger icons for top/bottom */
+    .face--top .weather-svg,
+    .face--bottom .weather-svg {
+      width: 18vmin;
+      height: 18vmin;
+    }
+
+    /* Animation - Slower, smoother tumble */
     @keyframes tumble {
-      from { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-      to { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
+      0% { 
+        transform: translateZ(-30vmin) rotateX(0deg) rotateY(0deg) rotateZ(0deg); 
+      }
+      100% { 
+        transform: translateZ(-30vmin) rotateX(360deg) rotateY(720deg) rotateZ(180deg); 
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      body { perspective: 1000px; }
+      .scene { 
+        width: 70vmin; 
+        height: 42vmin; 
+      }
     }
   </style>
 </head>
@@ -178,8 +210,8 @@
         <div class="info">
           <div class="day-label">Monday</div>
           <div class="temperature">22°F</div>
-          <div class="date-small">Feb 16</div>
-          <div class="range-small">H:22° L:22°</div>
+          <div class="date-small">February 16</div>
+          <div class="range-small">H: 22° L: 22°</div>
         </div>
         <div class="icon-wrapper">
           <svg class="weather-svg" viewBox="0 0 100 100">
@@ -199,43 +231,46 @@
       </div>
     </div>
 
-    <!-- Right: Tuesday (Cloud/Sun) -->
+    <!-- Right: Tuesday (Partly Cloudy) -->
     <div class="face face--right">
       <div class="face-content">
         <div class="info">
           <div class="day-label">Tuesday</div>
           <div class="temperature">24°F</div>
-          <div class="date-small">Feb 17</div>
-           <div class="range-small">H:25° L:18°</div>
+          <div class="date-small">February 17</div>
+          <div class="range-small">H: 25° L: 18°</div>
         </div>
         <div class="icon-wrapper">
-           <svg class="weather-svg" viewBox="0 0 24 24">
-             <circle cx="12" cy="12" r="5" fill="white" />
-             <g stroke="white" stroke-width="2" stroke-linecap="round">
-               <line x1="12" y1="2" x2="12" y2="4" />
-               <line x1="12" y1="20" x2="12" y2="22" />
-               <line x1="2" y1="12" x2="4" y2="12" />
-               <line x1="20" y1="12" x2="22" y2="12" />
-               <line x1="4.9" y1="4.9" x2="6.3" y2="6.3" />
-               <line x1="17.7" y1="17.7" x2="19.1" y2="19.1" />
+           <svg class="weather-svg" viewBox="0 0 100 100">
+             <g stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0.8">
+               <line x1="30" y1="15" x2="30" y2="10" />
+               <line x1="50" y1="15" x2="50" y2="10" />
+               <line x1="10" y1="30" x2="5" y2="30" />
+               <line x1="15" y1="18" x2="11" y2="14" />
+               <line x1="45" y1="18" x2="49" y2="14" />
              </g>
+             <circle cx="30" cy="30" r="12" fill="#FFEB3B" opacity="0.9" />
+             <ellipse cx="55" cy="55" rx="28" ry="20" fill="white" opacity="0.95"/>
+             <ellipse cx="45" cy="58" rx="22" ry="18" fill="white" opacity="0.9"/>
            </svg>
         </div>
       </div>
     </div>
 
-    <!-- Back: Wednesday (Cloud) -->
+    <!-- Back: Wednesday (Cloudy) -->
     <div class="face face--back">
       <div class="face-content">
         <div class="info">
           <div class="day-label">Wednesday</div>
           <div class="temperature">20°F</div>
-          <div class="date-small">Feb 18</div>
-          <div class="range-small">H:21° L:19°</div>
+          <div class="date-small">February 18</div>
+          <div class="range-small">H: 21° L: 19°</div>
         </div>
         <div class="icon-wrapper">
-          <svg class="weather-svg" viewBox="0 0 24 24">
-             <path d="M17.5,19c2.5,0,4.5-2,4.5-4.5c0-2.3-1.7-4.2-3.9-4.5c-0.2-2.5-2.3-4.5-4.9-4.5c-2.4,0-4.3,1.7-4.8,4c-0.1,0-0.2,0-0.3,0C4.5,9.5,1.5,12.5,1.5,16.2C1.5,19,4.5,19,4.5,19H17.5z" fill="white"/>
+          <svg class="weather-svg" viewBox="0 0 100 100">
+             <ellipse cx="50" cy="50" rx="35" ry="25" fill="white" opacity="0.95"/>
+             <ellipse cx="35" cy="52" rx="25" ry="20" fill="white" opacity="0.9"/>
+             <ellipse cx="65" cy="52" rx="25" ry="20" fill="white" opacity="0.9"/>
           </svg>
         </div>
       </div>
@@ -247,61 +282,70 @@
         <div class="info">
           <div class="day-label">Thursday</div>
           <div class="temperature">18°F</div>
-          <div class="date-small">Feb 19</div>
-          <div class="range-small">H:19° L:15°</div>
+          <div class="date-small">February 19</div>
+          <div class="range-small">H: 19° L: 15°</div>
         </div>
         <div class="icon-wrapper">
-           <svg class="weather-svg" viewBox="0 0 24 24">
-             <path d="M17.5,16c2.5,0,4.5-2,4.5-4.5c0-2.3-1.7-4.2-3.9-4.5c-0.2-2.5-2.3-4.5-4.9-4.5c-2.4,0-4.3,1.7-4.8,4c-0.1,0-0.2,0-0.3,0C4.5,6.5,1.5,9.5,1.5,13.2C1.5,16,4.5,16,4.5,16H17.5z" fill="white"/>
-             <g stroke="white" stroke-width="2" stroke-linecap="round">
-               <line x1="8" y1="19" x2="6" y2="22" />
-               <line x1="12" y1="19" x2="10" y2="22" />
-               <line x1="16" y1="19" x2="14" y2="22" />
+           <svg class="weather-svg" viewBox="0 0 100 100">
+             <ellipse cx="50" cy="35" rx="32" ry="22" fill="white" opacity="0.95"/>
+             <ellipse cx="35" cy="38" rx="22" ry="18" fill="white" opacity="0.9"/>
+             <ellipse cx="65" cy="38" rx="22" ry="18" fill="white" opacity="0.9"/>
+             <g stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.9">
+               <line x1="35" y1="60" x2="32" y2="70" />
+               <line x1="45" y1="58" x2="42" y2="68" />
+               <line x1="55" y1="60" x2="52" y2="70" />
+               <line x1="65" y1="58" x2="62" y2="68" />
              </g>
            </svg>
         </div>
       </div>
     </div>
 
-    <!-- Top: Friday (Sun) -->
+    <!-- Top: Friday (Sunny) -->
     <div class="face face--top">
       <div class="face-content">
         <div class="day-label">Friday</div>
         <div class="icon-wrapper">
-           <svg class="weather-svg" viewBox="0 0 24 24" style="width:20vmin; height:20vmin;">
-             <circle cx="12" cy="12" r="5" fill="white" />
-             <g stroke="white" stroke-width="2" stroke-linecap="round">
-               <line x1="12" y1="2" x2="12" y2="4" />
-               <line x1="12" y1="20" x2="12" y2="22" />
-               <line x1="2" y1="12" x2="4" y2="12" />
-               <line x1="20" y1="12" x2="22" y2="12" />
-               <line x1="4.9" y1="4.9" x2="6.3" y2="6.3" />
-               <line x1="17.7" y1="17.7" x2="19.1" y2="19.1" />
+           <svg class="weather-svg" viewBox="0 0 100 100">
+             <g stroke="#FFD700" stroke-width="4" stroke-linecap="round">
+               <line x1="50" y1="10" x2="50" y2="2" />
+               <line x1="50" y1="90" x2="50" y2="98" />
+               <line x1="90" y1="50" x2="98" y2="50" />
+               <line x1="10" y1="50" x2="2" y2="50" />
+               <line x1="78.28" y1="21.72" x2="84" y2="16" />
+               <line x1="21.72" y1="78.28" x2="16" y2="84" />
+               <line x1="78.28" y1="78.28" x2="84" y2="84" />
+               <line x1="21.72" y1="21.72" x2="16" y2="16" />
              </g>
-           </svg>
+             <circle cx="50" cy="50" r="22" fill="#FFEB3B" stroke="#FFD700" stroke-width="2" />
+          </svg>
         </div>
         <div class="temperature">25°F</div>
-        <div class="range-small">Sunny</div>
+        <div class="range-small">Sunny & Clear</div>
       </div>
     </div>
 
-    <!-- Bottom: Saturday (Sun) -->
+    <!-- Bottom: Saturday (Clear) -->
     <div class="face face--bottom">
       <div class="face-content">
         <div class="day-label">Saturday</div>
         <div class="icon-wrapper">
-           <svg class="weather-svg" viewBox="0 0 24 24" style="width:20vmin; height:20vmin;">
-             <circle cx="12" cy="12" r="5" fill="white" />
-             <g stroke="white" stroke-width="2" stroke-linecap="round">
-               <line x1="12" y1="2" x2="12" y2="4" />
-               <line x1="12" y1="20" x2="12" y2="22" />
-               <line x1="2" y1="12" x2="4" y2="12" />
-               <line x1="20" y1="12" x2="22" y2="12" />
+           <svg class="weather-svg" viewBox="0 0 100 100">
+             <g stroke="#FFD700" stroke-width="4" stroke-linecap="round">
+               <line x1="50" y1="15" x2="50" y2="5" />
+               <line x1="50" y1="85" x2="50" y2="95" />
+               <line x1="85" y1="50" x2="95" y2="50" />
+               <line x1="15" y1="50" x2="5" y2="50" />
+               <line x1="75" y1="25" x2="82" y2="18" />
+               <line x1="25" y1="75" x2="18" y2="82" />
+               <line x1="75" y1="75" x2="82" y2="82" />
+               <line x1="25" y1="25" x2="18" y2="18" />
              </g>
+             <circle cx="50" cy="50" r="20" fill="#FFEB3B" stroke="#FFD700" stroke-width="2" />
            </svg>
         </div>
         <div class="temperature">27°F</div>
-        <div class="range-small">Clear</div>
+        <div class="range-small">Clear Skies</div>
       </div>
     </div>
 
