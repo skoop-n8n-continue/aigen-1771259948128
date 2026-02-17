@@ -66,7 +66,7 @@
       }
     }
 
-    /* Base Face Styling - Glass/Ice Material */
+    /* Base Face Styling - High Quality Glass/Ice Material */
     .face {
       position: absolute;
       width: 400px;
@@ -78,22 +78,29 @@
       padding: 40px;
       overflow: hidden;
       
-      /* Glass/Ice material effect */
+      /* High-quality glass/ice material - multi-stop gradient for smoothness */
       background: linear-gradient(135deg, 
-        rgba(0, 183, 175, 0.85) 0%,
-        rgba(0, 183, 175, 0.75) 50%,
-        rgba(0, 183, 175, 0.85) 100%
+        rgba(0, 183, 175, 0.88) 0%,
+        rgba(0, 190, 180, 0.85) 12.5%,
+        rgba(0, 195, 185, 0.82) 25%,
+        rgba(0, 200, 190, 0.78) 37.5%,
+        rgba(0, 200, 190, 0.75) 50%,
+        rgba(0, 200, 190, 0.78) 62.5%,
+        rgba(0, 195, 185, 0.82) 75%,
+        rgba(0, 190, 180, 0.85) 87.5%,
+        rgba(0, 183, 175, 0.88) 100%
       );
       backdrop-filter: blur(10px);
       
-      /* Frosted glass texture */
+      /* Frosted glass texture with smoother transitions */
       box-shadow: 
-        inset 0 0 100px rgba(255, 255, 255, 0.1),
-        inset 20px 20px 60px rgba(255, 255, 255, 0.05),
-        inset -20px -20px 60px rgba(0, 0, 0, 0.1),
-        0 0 50px rgba(0, 183, 175, 0.3);
+        inset 0 0 120px rgba(255, 255, 255, 0.12),
+        inset 30px 30px 80px rgba(255, 255, 255, 0.06),
+        inset -30px -30px 80px rgba(0, 0, 0, 0.08),
+        0 0 60px rgba(0, 183, 175, 0.35),
+        0 10px 40px rgba(0, 183, 175, 0.2);
       
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       
       /* CRITICAL: Hide back faces to prevent see-through */
       backface-visibility: hidden;
@@ -103,7 +110,7 @@
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
-    /* Realistic ice reflections on each face */
+    /* High-res realistic ice reflections - smoother gradients */
     .face::before {
       content: '';
       position: absolute;
@@ -113,16 +120,22 @@
       height: 100%;
       background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.3) 0%,
-        transparent 30%,
-        transparent 70%,
-        rgba(255, 255, 255, 0.15) 100%
+        rgba(255, 255, 255, 0.35) 0%,
+        rgba(255, 255, 255, 0.28) 10%,
+        rgba(255, 255, 255, 0.18) 20%,
+        rgba(255, 255, 255, 0.08) 30%,
+        transparent 40%,
+        transparent 60%,
+        rgba(255, 255, 255, 0.05) 70%,
+        rgba(255, 255, 255, 0.12) 80%,
+        rgba(255, 255, 255, 0.18) 90%,
+        rgba(255, 255, 255, 0.22) 100%
       );
       pointer-events: none;
-      opacity: 0.6;
+      opacity: 0.7;
     }
 
-    /* Ice crystal texture overlay */
+    /* High-density ice crystal texture overlay */
     .face::after {
       content: '';
       position: absolute;
@@ -131,13 +144,20 @@
       width: 100%;
       height: 100%;
       background-image: 
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.2) 0%, transparent 3%),
-        radial-gradient(circle at 60% 70%, rgba(255,255,255,0.15) 0%, transparent 2%),
-        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2) 0%, transparent 2.5%),
-        radial-gradient(circle at 30% 80%, rgba(255,255,255,0.18) 0%, transparent 2%),
-        radial-gradient(circle at 90% 60%, rgba(255,255,255,0.15) 0%, transparent 2%);
+        radial-gradient(circle at 15% 25%, rgba(255,255,255,0.25) 0%, transparent 2.5%),
+        radial-gradient(circle at 45% 15%, rgba(255,255,255,0.18) 0%, transparent 2%),
+        radial-gradient(circle at 65% 35%, rgba(255,255,255,0.22) 0%, transparent 2.8%),
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.2) 0%, transparent 2.3%),
+        radial-gradient(circle at 25% 55%, rgba(255,255,255,0.19) 0%, transparent 2.2%),
+        radial-gradient(circle at 55% 68%, rgba(255,255,255,0.23) 0%, transparent 2.6%),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.17) 0%, transparent 2%),
+        radial-gradient(circle at 35% 82%, rgba(255,255,255,0.21) 0%, transparent 2.4%),
+        radial-gradient(circle at 90% 55%, rgba(255,255,255,0.18) 0%, transparent 2.1%),
+        radial-gradient(circle at 12% 70%, rgba(255,255,255,0.2) 0%, transparent 2.3%),
+        radial-gradient(circle at 48% 42%, rgba(255,255,255,0.16) 0%, transparent 1.8%),
+        radial-gradient(circle at 88% 88%, rgba(255,255,255,0.19) 0%, transparent 2.2%);
       pointer-events: none;
-      opacity: 0.5;
+      opacity: 0.6;
     }
 
     /* Face Positioning - Perfect Cube (400x400x400) */
@@ -171,7 +191,7 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       opacity: 0.95;
     }
 
@@ -179,28 +199,28 @@
       font-size: 96px;
       font-weight: 700;
       line-height: 0.9;
-      margin: 20px 0;
+      margin: 15px 0;
       text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
 
     .date-info {
       font-size: 18px;
       opacity: 0.9;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .range-info {
       font-size: 20px;
       font-weight: 500;
       opacity: 0.95;
-      margin-top: 15px;
+      margin-top: 12px;
     }
 
-    /* Weather Icons */
+    /* Weather Icons - Expanded to fill space */
     .weather-icon {
-      width: 120px;
-      height: 120px;
-      margin: 20px 0;
+      width: 160px;
+      height: 160px;
+      margin: 15px 0;
       filter: drop-shadow(0 4px 15px rgba(255, 235, 59, 0.5));
     }
 
@@ -230,7 +250,7 @@
       .day-label { font-size: 20px; }
       .date-info { font-size: 14px; }
       .range-info { font-size: 16px; }
-      .weather-icon { width: 80px; height: 80px; }
+      .weather-icon { width: 110px; height: 110px; }
     }
   </style>
 </head>
@@ -243,17 +263,17 @@
     <div class="face face--front">
       <div class="day-label">Monday</div>
       <svg class="weather-icon" viewBox="0 0 100 100">
-        <g stroke="#FFD700" stroke-width="4" stroke-linecap="round">
-          <line x1="50" y1="10" x2="50" y2="2" />
-          <line x1="50" y1="98" x2="50" y2="90" />
-          <line x1="90" y1="50" x2="98" y2="50" />
-          <line x1="10" y1="50" x2="2" y2="50" />
-          <line x1="78.28" y1="21.72" x2="84.85" y2="15.15" />
-          <line x1="21.72" y1="78.28" x2="15.15" y2="84.85" />
-          <line x1="78.28" y1="78.28" x2="84.85" y2="84.85" />
-          <line x1="21.72" y1="21.72" x2="15.15" y2="15.15" />
+        <g stroke="#FFD700" stroke-width="3.5" stroke-linecap="round">
+          <line x1="50" y1="5" x2="50" y2="0" />
+          <line x1="50" y1="100" x2="50" y2="95" />
+          <line x1="95" y1="50" x2="100" y2="50" />
+          <line x1="5" y1="50" x2="0" y2="50" />
+          <line x1="82.07" y1="17.93" x2="85.86" y2="14.14" />
+          <line x1="17.93" y1="82.07" x2="14.14" y2="85.86" />
+          <line x1="82.07" y1="82.07" x2="85.86" y2="85.86" />
+          <line x1="17.93" y1="17.93" x2="14.14" y2="14.14" />
         </g>
-        <circle cx="50" cy="50" r="24" fill="#FFEB3B" stroke="#FFD700" stroke-width="2" />
+        <circle cx="50" cy="50" r="26" fill="#FFEB3B" stroke="#FFD700" stroke-width="2.5" />
       </svg>
       <div class="temperature">22°F</div>
       <div class="date-info">February 16</div>
@@ -264,16 +284,16 @@
     <div class="face face--right">
       <div class="day-label">Tuesday</div>
       <svg class="weather-icon" viewBox="0 0 100 100">
-        <g stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0.9">
-          <line x1="28" y1="18" x2="28" y2="12" />
-          <line x1="48" y1="18" x2="48" y2="12" />
-          <line x1="12" y1="28" x2="6" y2="28" />
-          <line x1="18" y1="20" x2="13" y2="15" />
-          <line x1="44" y1="20" x2="49" y2="15" />
+        <g stroke="#FFD700" stroke-width="2.8" stroke-linecap="round" opacity="0.95">
+          <line x1="24" y1="14" x2="24" y2="8" />
+          <line x1="46" y1="14" x2="46" y2="8" />
+          <line x1="8" y1="24" x2="2" y2="24" />
+          <line x1="16" y1="16" x2="11" y2="11" />
+          <line x1="42" y1="16" x2="47" y2="11" />
         </g>
-        <circle cx="30" cy="28" r="14" fill="#FFEB3B" opacity="0.95" />
-        <ellipse cx="58" cy="55" rx="32" ry="24" fill="rgba(255,255,255,0.95)" />
-        <ellipse cx="45" cy="58" rx="25" ry="20" fill="rgba(255,255,255,0.9)" />
+        <circle cx="28" cy="24" r="16" fill="#FFEB3B" opacity="0.98" />
+        <ellipse cx="58" cy="58" rx="36" ry="28" fill="rgba(255,255,255,0.98)" />
+        <ellipse cx="42" cy="62" rx="30" ry="24" fill="rgba(255,255,255,0.95)" />
       </svg>
       <div class="temperature">24°F</div>
       <div class="date-info">February 17</div>
@@ -284,9 +304,9 @@
     <div class="face face--back">
       <div class="day-label">Wednesday</div>
       <svg class="weather-icon" viewBox="0 0 100 100">
-        <ellipse cx="50" cy="50" rx="38" ry="28" fill="rgba(255,255,255,0.95)" />
-        <ellipse cx="32" cy="52" rx="28" ry="22" fill="rgba(255,255,255,0.9)" />
-        <ellipse cx="68" cy="52" rx="28" ry="22" fill="rgba(255,255,255,0.9)" />
+        <ellipse cx="50" cy="50" rx="42" ry="32" fill="rgba(255,255,255,0.98)" />
+        <ellipse cx="30" cy="52" rx="32" ry="26" fill="rgba(255,255,255,0.95)" />
+        <ellipse cx="70" cy="52" rx="32" ry="26" fill="rgba(255,255,255,0.95)" />
       </svg>
       <div class="temperature">20°F</div>
       <div class="date-info">February 18</div>
@@ -297,14 +317,14 @@
     <div class="face face--left">
       <div class="day-label">Thursday</div>
       <svg class="weather-icon" viewBox="0 0 100 100">
-        <ellipse cx="50" cy="35" rx="35" ry="25" fill="rgba(255,255,255,0.95)" />
-        <ellipse cx="32" cy="38" rx="25" ry="20" fill="rgba(255,255,255,0.9)" />
-        <ellipse cx="68" cy="38" rx="25" ry="20" fill="rgba(255,255,255,0.9)" />
-        <g stroke="rgba(255,255,255,0.95)" stroke-width="3.5" stroke-linecap="round">
-          <line x1="32" y1="58" x2="28" y2="72" />
-          <line x1="44" y1="56" x2="40" y2="70" />
-          <line x1="56" y1="58" x2="52" y2="72" />
-          <line x1="68" y1="56" x2="64" y2="70" />
+        <ellipse cx="50" cy="32" rx="40" ry="28" fill="rgba(255,255,255,0.98)" />
+        <ellipse cx="30" cy="36" rx="30" ry="24" fill="rgba(255,255,255,0.95)" />
+        <ellipse cx="70" cy="36" rx="30" ry="24" fill="rgba(255,255,255,0.95)" />
+        <g stroke="rgba(255,255,255,0.98)" stroke-width="4" stroke-linecap="round">
+          <line x1="28" y1="60" x2="24" y2="78" />
+          <line x1="42" y1="58" x2="38" y2="76" />
+          <line x1="56" y1="60" x2="52" y2="78" />
+          <line x1="70" y1="58" x2="66" y2="76" />
         </g>
       </svg>
       <div class="temperature">18°F</div>
@@ -316,17 +336,17 @@
     <div class="face face--top">
       <div class="day-label">Friday</div>
       <svg class="weather-icon" viewBox="0 0 100 100">
-        <g stroke="#FFD700" stroke-width="4" stroke-linecap="round">
-          <line x1="50" y1="10" x2="50" y2="2" />
-          <line x1="50" y1="98" x2="50" y2="90" />
-          <line x1="90" y1="50" x2="98" y2="50" />
-          <line x1="10" y1="50" x2="2" y2="50" />
-          <line x1="78.28" y1="21.72" x2="84.85" y2="15.15" />
-          <line x1="21.72" y1="78.28" x2="15.15" y2="84.85" />
-          <line x1="78.28" y1="78.28" x2="84.85" y2="84.85" />
-          <line x1="21.72" y1="21.72" x2="15.15" y2="15.15" />
+        <g stroke="#FFD700" stroke-width="3.5" stroke-linecap="round">
+          <line x1="50" y1="5" x2="50" y2="0" />
+          <line x1="50" y1="100" x2="50" y2="95" />
+          <line x1="95" y1="50" x2="100" y2="50" />
+          <line x1="5" y1="50" x2="0" y2="50" />
+          <line x1="82.07" y1="17.93" x2="85.86" y2="14.14" />
+          <line x1="17.93" y1="82.07" x2="14.14" y2="85.86" />
+          <line x1="82.07" y1="82.07" x2="85.86" y2="85.86" />
+          <line x1="17.93" y1="17.93" x2="14.14" y2="14.14" />
         </g>
-        <circle cx="50" cy="50" r="24" fill="#FFEB3B" stroke="#FFD700" stroke-width="2" />
+        <circle cx="50" cy="50" r="26" fill="#FFEB3B" stroke="#FFD700" stroke-width="2.5" />
       </svg>
       <div class="temperature">25°F</div>
       <div class="range-info">Sunny & Clear</div>
@@ -336,17 +356,17 @@
     <div class="face face--bottom">
       <div class="day-label">Saturday</div>
       <svg class="weather-icon" viewBox="0 0 100 100">
-        <g stroke="#FFD700" stroke-width="3.5" stroke-linecap="round">
-          <line x1="50" y1="15" x2="50" y2="8" />
-          <line x1="50" y1="92" x2="50" y2="85" />
-          <line x1="85" y1="50" x2="92" y2="50" />
-          <line x1="15" y1="50" x2="8" y2="50" />
-          <line x1="74" y1="26" x2="80" y2="20" />
-          <line x1="26" y1="74" x2="20" y2="80" />
-          <line x1="74" y1="74" x2="80" y2="80" />
-          <line x1="26" y1="26" x2="20" y2="20" />
+        <g stroke="#FFD700" stroke-width="3.2" stroke-linecap="round">
+          <line x1="50" y1="8" x2="50" y2="2" />
+          <line x1="50" y1="98" x2="50" y2="92" />
+          <line x1="92" y1="50" x2="98" y2="50" />
+          <line x1="8" y1="50" x2="2" y2="50" />
+          <line x1="79.21" y1="20.79" x2="84.85" y2="15.15" />
+          <line x1="20.79" y1="79.21" x2="15.15" y2="84.85" />
+          <line x1="79.21" y1="79.21" x2="84.85" y2="84.85" />
+          <line x1="20.79" y1="20.79" x2="15.15" y2="15.15" />
         </g>
-        <circle cx="50" cy="50" r="22" fill="#FFEB3B" stroke="#FFD700" stroke-width="2" />
+        <circle cx="50" cy="50" r="25" fill="#FFEB3B" stroke="#FFD700" stroke-width="2.5" />
       </svg>
       <div class="temperature">27°F</div>
       <div class="range-info">Clear Skies</div>
